@@ -35,12 +35,12 @@ module.exports = {
   watch: true,
   output: {
     path: path.resolve(__dirname, 'build'),
-    publicPath: 'http://0.0.0.0:8080/',
+    publicPath: `http://${process.env["IP"] || '0.0.0.0'}:8080/`,
   },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/app/index.html",
-      filename: "index.html"
+      filename: "app.html"
     }),
     new webpack.HotModuleReplacementPlugin()]
 };
