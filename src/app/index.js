@@ -15,6 +15,11 @@ const addPost = () => {
   const author = document.getElementById("author-input").value;
   const description = document.getElementById("description-input").value;
   // TODO: send author and description to firebase
+  fetch('http://localhost:8080/').then(response => (
+   response
+  )).then(function(myJson) {
+    console.log(myJson);
+  });
 };
 
 document.addEventListener("DOMContentLoaded", function() {
