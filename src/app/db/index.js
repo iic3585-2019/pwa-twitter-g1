@@ -7,7 +7,7 @@ export const configureDB = () => {
   firebase.initializeApp(config);
 };
 
-export const writeNewPost = (username, body) => {
+export const writeNewPost = (username, body, callback) => {
   // A post entry.
   const postData = {
     author: username,
@@ -21,15 +21,15 @@ export const writeNewPost = (username, body) => {
   const updates = {};
   updates['/posts/' + newPostKey] = postData;
 
-  return firebase.database().ref().update(updates);
+  return firebase.database().ref('/posts/' + newPostKey).set(postData, callback);
 };
 
-export const fetchPosts = () => {
+export const fetchPosts = (callback) => {
   return firebase.database().ref().child('posts').on('value', snapshot => {
+    const posts = [];
     snapshot.forEach(childSnapshot => {
-      const childKey = childSnapshot.key;
-      const childData = childSnapshot.val();
-      console.log(childData);
-    })
+      posts.push(childSnapshot.val());
+    });
+    callback(posts);
   })
 };
