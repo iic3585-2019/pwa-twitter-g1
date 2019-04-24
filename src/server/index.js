@@ -22,15 +22,6 @@ app.use(hotMiddleware(compiler));
 
 app.use(express.static(DIST_DIR));
 
-app.get('/styles/index.scss', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'app','styles' ,'index.scss'));
-});
-
-app.get('/index.js', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'app', 'service-worker.js'));
-});
-
-
 app.get('/service-worker.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'app', 'service-worker.js'));
 });
