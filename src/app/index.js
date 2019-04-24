@@ -9,7 +9,7 @@ let registration;
 const updatePosts = () => {
   configurePostUpdate((posts) => {
     if (registration && Notification.permission === "granted") {
-      registration.showNotification("New teet", {
+      registration.showNotification("Feed update", {
         body: "¡Your feed has been updated!"
       });
     }
