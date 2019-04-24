@@ -1,12 +1,20 @@
 import $ from "jquery";
 
-import { writeNewPost, fetchPosts, configureDB } from './db';
+import { writeNewPost, configurePostUpdate, configureDB } from './db';
 
 import "./styles/index.scss"
-import {configureWebSocket, webSocket} from './webSocket';
+
+let registration;
 
 const updatePosts = () => {
-  fetchPosts((posts) => {
+  configurePostUpdate((posts) => {
+    if (registration && Notification.permission === "granted") {
+      registration.showNotification("New teet", {
+        body: "There is a new teet in your feed"
+      });
+    }
+    console.log(Notification.permission);
+    console.log(registration);
     console.log(posts);
     const postsContainer = document.getElementById("posts-container");
     postsContainer.innerHTML = posts.map(post => `
@@ -24,32 +32,15 @@ $(() => {
   $("#post-button").click(() => {
     const author = $("#author-input").val();
     const description = $("#description-input").val();
-    writeNewPost(author, description, (err) => {
-      if (!err) {
-        updatePosts();
-        if (webSocket) {
-          webSocket.send("refetch");
-        }
-      } else {
-        console.error(err);
-      }
-    });
+    writeNewPost(author, description);
   });
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
-      .then((registration) => {
+      .then((reg) => {
+        registration = reg;
         console.log('Service Worker registration completed with scope: ',
-          registration.scope);
-        Notification.requestPermission().then(permission => {
-          if (permission) {
-            configureWebSocket((message) => {
-              registration.showNotification("New teet", {
-                body: "There is a new teet in your feed"
-              });
-            });
-            console.log("Registration complete");
-          }
-        });
+          reg.scope);
+        Notification.requestPermission();
         console.log("Asked notification");
       }, (err) => {
         console.log('Service Worker registration failed', err)

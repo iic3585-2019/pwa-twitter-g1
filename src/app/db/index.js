@@ -24,8 +24,8 @@ export const writeNewPost = (username, body, callback) => {
   return firebase.database().ref('/posts/' + newPostKey).set(postData, callback);
 };
 
-export const fetchPosts = (callback) => {
-  return firebase.database().ref().child('posts').on('value', snapshot => {
+export const configurePostUpdate = (callback) => {
+  firebase.database().ref().child('posts').on('value', snapshot => {
     const posts = [];
     snapshot.forEach(childSnapshot => {
       posts.push(childSnapshot.val());

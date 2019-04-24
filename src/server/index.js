@@ -4,8 +4,6 @@ import webpack from 'webpack';
 import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../../webpack.config';
-import WebSocket from 'ws';
-import http from 'http';
 
 const compiler = webpack(webpackConfig);
 
@@ -31,20 +29,7 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
 
-const server = http.createServer(app);
-
-const webSocketServer = new WebSocket.Server({server});
-
-webSocketServer.on('connection', (webSocketClient) => {
-  webSocketClient.on('message', (message) => {
-    webSocketServer.clients.forEach(client => {
-      if (client !== webSocketClient) {
-        client.send("refetch");
-      }
-    });
-  });
-});
-
-server.listen({host: HOST, port: PORT || 8999}, () => {
-  console.log(`Server started on port ${server.address().port} :)`);
+app.listen(PORT, HOST, () => {
+  console.log(`App listening to ${PORT}....`);
+  console.log('Press Ctrl+C to quit.');
 });
