@@ -3,6 +3,7 @@ import $ from "jquery";
 import { writeNewPost, fetchPosts, configureDB } from './db';
 
 import "./styles/index.scss"
+import {configureWebSocket, webSocket} from './webSocket';
 
 const updatePosts = () => {
   fetchPosts((posts) => {
@@ -26,23 +27,35 @@ $(() => {
     writeNewPost(author, description, (err) => {
       if (!err) {
         updatePosts();
+        if (webSocket) {
+          webSocket.send("refetch");
+        }
       } else {
         console.error(err);
       }
     });
   });
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registration completed with scope: ',
-            registration.scope)
-        }, (err) => {
-          console.log('Service Worker registration failed', err)
-        })
-    });
+    navigator.serviceWorker.register('service-worker.js')
+      .then((registration) => {
+        console.log('Service Worker registration completed with scope: ',
+          registration.scope);
+        Notification.requestPermission().then(permission => {
+          if (permission) {
+            configureWebSocket((message) => {
+              registration.showNotification("New teet", {
+                body: "There is a new teet in your feed"
+              });
+            });
+            console.log("Registration complete");
+          }
+        });
+        console.log("Asked notification");
+      }, (err) => {
+        console.log('Service Worker registration failed', err)
+      })
   } else {
-    console.log('Service Worker registration failed', err)
+    console.log('Service Worker registration failed')
   }
 });
 
