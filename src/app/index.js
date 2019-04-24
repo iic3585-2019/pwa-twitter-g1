@@ -10,7 +10,7 @@ const updatePosts = () => {
   configurePostUpdate((posts) => {
     if (registration && Notification.permission === "granted") {
       registration.showNotification("New teet", {
-        body: "There is a new teet in your feed"
+        body: "¡Your feed has been updated!"
       });
     }
     console.log(Notification.permission);
