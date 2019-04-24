@@ -17,7 +17,7 @@ const updatePosts = () => {
     console.log(registration);
     console.log(posts);
     const postsContainer = document.getElementById("posts-container");
-    postsContainer.innerHTML = posts.map(post => `
+    postsContainer.innerHTML = posts.reverse().map(post => `
   <div class="post">
     <p class="post-author">${post.author}</p> 
     <p class="post-description">${post.body}</p> 
