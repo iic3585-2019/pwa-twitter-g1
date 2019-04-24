@@ -1,33 +1,36 @@
+import $ from "jquery";
+
+import { writeNewPost, fetchPosts, configureDB } from './db';
+
 import "./styles/index.scss"
 
-const posts = [
-  {
-    author: "Florencia",
-    description: "Post 1",
-  },
-  {
-    author: "Thomas",
-    description: "Post 2",
-  }
-];
-
-const addPost = () => {
-  const author = document.getElementById("author-input").value;
-  const description = document.getElementById("description-input").value;
-  // TODO: send author and description to firebase
-};
-
-document.addEventListener("DOMContentLoaded", function() {
-  const button = document.getElementById("post-button");
-  button.addEventListener("click", addPost);
-
-  const postsContainer = document.getElementById("posts-container");
-  postsContainer.innerHTML = posts.map(post => `
+const updatePosts = () => {
+  fetchPosts((posts) => {
+    console.log(posts);
+    const postsContainer = document.getElementById("posts-container");
+    postsContainer.innerHTML = posts.map(post => `
   <div class="post">
     <p class="post-author">${post.author}</p> 
-    <p class="post-description">${post.description}</p> 
+    <p class="post-description">${post.body}</p> 
   </div>
 `).join('');
+  });
+};
+
+$(() => {
+  configureDB();
+  updatePosts();
+  $("#post-button").click(() => {
+    const author = $("#author-input").val();
+    const description = $("#description-input").val();
+    writeNewPost(author, description, (err) => {
+      if (!err) {
+        updatePosts();
+      } else {
+        console.error(err);
+      }
+    });
+  })
 });
 
 if (module.hot) {
