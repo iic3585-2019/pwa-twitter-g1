@@ -1,6 +1,12 @@
-import { writeNewPost as writeNewPost, fetchPosts as fetchPosts } from './db';
+import { writeNewPost, fetchPosts, configureDB } from './db';
+import $ from "jquery";
 
-console.log('Hola mundo!');
+
+$(() => {
+  configureDB();
+  fetchPosts();
+});
+
 
 if (module.hot) {
   module.hot.accept();
