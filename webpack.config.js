@@ -28,7 +28,8 @@ module.exports = {
     app: [
       "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
       path.resolve(__dirname, 'src', 'app', 'index.js')
-    ]
+    ],
+    "service-worker": path.resolve(__dirname, 'src', 'app', 'service-worker.js')
   },
   mode: 'development',
   devtool: 'inline-source-map',
@@ -36,6 +37,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: `http://${process.env["IP"] || '0.0.0.0'}:8080/`,
+    globalObject: "this"
   },
   plugins: [
     new HtmlWebPackPlugin({

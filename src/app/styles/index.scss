@@ -3,3 +3,102 @@
 html {
   font-family: 'Roboto', sans-serif;
 }
+
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+  
+body {
+  background-color: #e6ecf0;
+}
+  
+h1 {
+  color: #66757f;
+  font-size: 17px;
+  margin: 10px;
+}
+  
+h2 {
+  color: #66757f;
+  font-size: 18px;
+  font-weight: 300;
+}
+  
+p {
+  font-weight: 300;
+}
+  
+label {
+  font-weight: 300;
+  display: block;
+  margin: 15px 0;
+  font-size: 15px;
+}
+  
+input {
+  background-color: #f5f8fa;
+  border-radius: 18px;
+  padding: 7px;
+  border: 1px solid #e6ecf0;
+  margin-bottom: 0;
+  width: 100%;
+}
+  
+button {
+  background-color: #1da1f2;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin: 7px;
+}
+  
+button:hover {
+  background-color: #006DBF;
+}
+  
+#topbar {
+  border-bottom: 2px solid rgba(0,0,0,0.07);
+  position: fixed;
+  background-color: white;
+  padding-left: 40px;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
+  
+#content {
+  max-width: 950px;
+  margin: auto;
+  padding-top: 30px;
+}
+  
+#form-container {
+  margin: 20px 0;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+  
+div .post {
+  background-color: white;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+  
+.post-author {
+  color: #66757f;
+  font-style: italic;
+  font-size: 13px;
+}
+  
+.post-description {
+  color: #24282E;
+  margin-left: 5px;
+}
+  
+  
